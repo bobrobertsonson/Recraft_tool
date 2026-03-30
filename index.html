@@ -356,14 +356,17 @@ button:hover {
             })),
           };
 
-          const response = await fetch('https://api.recraft.ai/v1/images/generations', {
+          const response = await fetch('/api/generate', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${apiKey}`,
             },
-            body: JSON.stringify(requestBody),
-          });
+            body: JSON.stringify({
+  prompt: prompt,
+  apiKey: apiKey,
+  styleImages: styleImageBase64s.map((base64) => `data:image/jpeg;base64,${base64}`),
+}),
 
           if (!response.ok) {
             const errorData = await response.json();
